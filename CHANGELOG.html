@@ -1,0 +1,551 @@
+<title>FS_Skills Changelog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --bg: #eff1ee;
+    --surface: #ffffff;
+    --surface-2: #e6e9e2;
+    --ink: #1e2420;
+    --ink-dim: #57605a;
+    --ink-faint: #838d84;
+    --border: #d6d9d1;
+    --accent: #35604f;
+    --accent-ink: #eaf3ee;
+    --tag-added: #2e7d4f;
+    --tag-added-bg: #e4f2e9;
+    --tag-changed: #a9760b;
+    --tag-changed-bg: #f6ecd8;
+    --tag-breaking: #b3412c;
+    --tag-breaking-bg: #f6e4df;
+    --tag-fixed: #2a5c8a;
+    --tag-fixed-bg: #e2ecf4;
+    --tag-docs: #5c625d;
+    --tag-docs-bg: #e7e9e3;
+    --shadow: 0 1px 2px rgba(30, 36, 32, 0.06), 0 8px 24px -12px rgba(30, 36, 32, 0.18);
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Noto Serif", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121815;
+      --surface: #182019;
+      --surface-2: #202b23;
+      --ink: #e7ece6;
+      --ink-dim: #a3ada5;
+      --ink-faint: #74807a;
+      --border: #2c3830;
+      --accent: #74c99a;
+      --accent-ink: #0e1712;
+      --tag-added: #5cc490;
+      --tag-added-bg: #17301f;
+      --tag-changed: #e0b458;
+      --tag-changed-bg: #332708;
+      --tag-breaking: #e8836a;
+      --tag-breaking-bg: #3a1c14;
+      --tag-fixed: #74aee0;
+      --tag-fixed-bg: #17273a;
+      --tag-docs: #a7afa9;
+      --tag-docs-bg: #232b25;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #121815;
+    --surface: #182019;
+    --surface-2: #202b23;
+    --ink: #e7ece6;
+    --ink-dim: #a3ada5;
+    --ink-faint: #74807a;
+    --border: #2c3830;
+    --accent: #74c99a;
+    --accent-ink: #0e1712;
+    --tag-added: #5cc490;
+    --tag-added-bg: #17301f;
+    --tag-changed: #e0b458;
+    --tag-changed-bg: #332708;
+    --tag-breaking: #e8836a;
+    --tag-breaking-bg: #3a1c14;
+    --tag-fixed: #74aee0;
+    --tag-fixed-bg: #17273a;
+    --tag-docs: #a7afa9;
+    --tag-docs-bg: #232b25;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); }
+
+  .skip-link:not(:focus) {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-inner {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .topbar-title {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    white-space: nowrap;
+  }
+  .version-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-left: auto;
+  }
+  .version-nav a {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-decoration: none;
+    color: var(--ink-dim);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 3px 8px;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .version-nav a:hover,
+  .version-nav a:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ---------- Header / masthead ---------- */
+  .masthead {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 56px 24px 40px;
+  }
+  .masthead h1 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: clamp(1.7rem, 3.2vw, 2.35rem);
+    letter-spacing: -0.01em;
+    margin: 0 0 10px;
+    text-wrap: balance;
+  }
+  .masthead p {
+    color: var(--ink-dim);
+    max-width: 62ch;
+    margin: 0 0 22px;
+    font-size: 1.02rem;
+  }
+  .legend {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 9px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+  }
+  .tag--added { color: var(--tag-added); background: var(--tag-added-bg); }
+  .tag--changed { color: var(--tag-changed); background: var(--tag-changed-bg); }
+  .tag--breaking { color: var(--tag-breaking); background: var(--tag-breaking-bg); }
+  .tag--fixed { color: var(--tag-fixed); background: var(--tag-fixed-bg); }
+  .tag--docs { color: var(--tag-docs); background: var(--tag-docs-bg); }
+
+  /* ---------- Ledger / timeline ---------- */
+  main {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .ledger {
+    position: relative;
+    padding-left: 28px;
+    border-left: 1px solid var(--border);
+  }
+
+  .entry {
+    position: relative;
+    margin-bottom: 56px;
+    scroll-margin-top: 64px;
+  }
+  .entry:last-child { margin-bottom: 0; }
+
+  .entry::before {
+    content: "";
+    position: absolute;
+    left: -33px;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--bg);
+  }
+  .entry--unreleased::before {
+    background: transparent;
+    border: 1px solid var(--ink-faint);
+  }
+
+  .entry-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .version-stamp {
+    font-family: var(--mono);
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .version-stamp .v { color: var(--accent); }
+  .entry-date {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .entry-summary {
+    color: var(--ink-dim);
+    margin: 0 0 22px;
+    font-size: 1rem;
+    max-width: 64ch;
+  }
+
+  .group {
+    margin-bottom: 20px;
+  }
+  .group:last-of-type { margin-bottom: 0; }
+  .group-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .group-list {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .group-list li {
+    padding-left: 18px;
+    position: relative;
+  }
+  .group-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 6px;
+    height: 1px;
+    background: var(--ink-faint);
+  }
+  .group-list code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.05em 0.4em;
+    color: var(--ink);
+  }
+  .group-list .impact {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+  .group-list .impact strong {
+    color: var(--ink-dim);
+    font-weight: 600;
+  }
+
+  /* ---------- Impact table ---------- */
+  .impact-table-wrap {
+    overflow-x: auto;
+    margin-top: 24px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+  table.impact-table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 420px;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+  }
+  .impact-table caption {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    padding: 12px 16px 0;
+  }
+  .impact-table th, .impact-table td {
+    text-align: left;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .impact-table tr:last-child td { border-bottom: none; }
+  .impact-table th {
+    color: var(--ink-dim);
+    font-weight: 600;
+    font-size: 0.82rem;
+  }
+  .impact-table td code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--ink);
+  }
+
+  .empty-note {
+    color: var(--ink-faint);
+    font-style: italic;
+    font-size: 0.95rem;
+  }
+
+  footer {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+    color: var(--ink-faint);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+  }
+  footer a { color: var(--ink-dim); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .entry {
+      animation: rise 0.5s ease both;
+    }
+    .entry:nth-of-type(2) { animation-delay: 0.05s; }
+    .entry:nth-of-type(3) { animation-delay: 0.1s; }
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 560px) {
+    .version-nav { margin-left: 0; }
+    .ledger { padding-left: 20px; }
+    .entry::before { left: -25px; }
+  }
+</style>
+
+<a class="skip-link" href="#v2-1-0">Skip to latest version</a>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-title">FS_Skills · Changelog</span>
+    <nav class="version-nav" aria-label="Jump to version">
+      <a href="#unreleased">Unreleased</a>
+      <a href="#v2-1-0">2.1.0</a>
+      <a href="#v2-0-0">2.0.0</a>
+      <a href="#v1-0-0">1.0.0</a>
+    </nav>
+  </div>
+</div>
+
+<header class="masthead">
+  <h1>Changelog</h1>
+  <p>Every notable change to the FS_Skills business analyst skill set — what moved, what's new, and exactly which skills and files each release touches. Ordered newest first, following <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a> and <a href="https://semver.org/">Semantic Versioning</a>.</p>
+  <div class="legend" aria-label="Change type legend">
+    <span class="tag tag--added">Added</span>
+    <span class="tag tag--changed">Changed</span>
+    <span class="tag tag--breaking">Breaking</span>
+    <span class="tag tag--fixed">Fixed</span>
+    <span class="tag tag--docs">Docs</span>
+  </div>
+</header>
+
+<main>
+  <div class="ledger">
+
+    <section class="entry entry--unreleased" id="unreleased" aria-labelledby="unreleased-h">
+      <div class="entry-head">
+        <span class="version-stamp"><span class="v">v</span>Unreleased</span>
+      </div>
+      <p class="empty-note">Nothing yet.</p>
+    </section>
+
+    <section class="entry" id="v2-1-0" aria-labelledby="v2-1-0-h">
+      <div class="entry-head">
+        <span class="version-stamp" id="v2-1-0-h"><span class="v">v</span>2.1.0</span>
+        <time class="entry-date" datetime="2026-08-19">2026-08-19</time>
+      </div>
+      <p class="entry-summary">Enriched <code>fintech-token-ecosystem</code> with current (2026) regulatory, market, and security-practice research: the SEC/CFTC joint interpretive framework, MiCA's machine-readable whitepaper mandate, the US GENIUS Act for stablecoins, FATF Travel Rule enforcement reality, ERC-3643 institutional adoption data, DAO governance/treasury best practices, and 2025–2026 exploit/audit market data.</p>
+
+      <div class="group">
+        <div class="group-label"><span class="tag tag--changed">Changed</span></div>
+        <ul class="group-list">
+          <li><code>skills/fintech-token-ecosystem/SKILL.md</code> — Stage 2 gains §2.4 "Design Frameworks &amp; Current Practice (2026)" (stakeholder analysis / incentive-design / participatory co-design frameworks, hybrid inflation-then-burn market pattern, common-failure-modes table).
+            <span class="impact"><strong>Impacted function:</strong> tokenomics design workflow — deeper guidance, stage structure unchanged.</span>
+          </li>
+          <li>Stage 3 — added ERC-4626 to the standards table; added an ERC-3643 institutional-adoption callout ($32B+ RWA tokenized, 180+ jurisdictions, DTCC/Apex/Invesco/Franklin Templeton/Fasanara adopters, ISO standardization underway).</li>
+          <li>Stage 4 — added §4.1 "Governance Model — Current Best Practice" (tiered decision-making, vote delegation, vote-escrow, hybrid weighting, governance minimization) and §4.2 "Treasury — Current Best Practice" (multisig threshold, signer rotation, hardware keys, monitoring, Safe as default tooling).</li>
+          <li>Stage 5 — reworked §5.1 with the March 2026 SEC/CFTC 5-bucket taxonomy and marketing-language-driven Howey analysis, GENIUS Act stablecoin requirements, and MiCA's Dec 2025 XHTML/iXBRL whitepaper mandate; §5.2 now states current FATF Travel Rule enforcement coverage (~73% legislated, ~40% enforced) with named enforcing jurisdictions; §5.3 risk register reordered around access-control failures, oracle manipulation, and bridge compromise as the current leading loss categories, with audit cost bands.
+            <span class="impact"><strong>Impacted function:</strong> compliance &amp; risk analysis workflow — classification guidance, KYC/AML enforcement expectations, and the risk register all updated.</span>
+          </li>
+          <li>Stage 7 — noted the shift from one-time pre-launch audit to continuous post-launch monitoring. Added a closing "A Note on Currency" section.</li>
+          <li><code>skills/fintech-token-ecosystem/references/token-compliance-reference.md</code> — expanded Regulatory Frameworks section; added "FATF Travel Rule — Enforcement Reality Check (2026)", "Governance Model Quick Reference", "Treasury Multisig Checklist", and "Exploit &amp; Audit Market Data (2025–2026)"; added glossary terms (ve-model, RWA, TWAP); added a dated "Sources &amp; Research Currency" section listing every source consulted.</li>
+        </ul>
+      </div>
+
+      <div class="impact-table-wrap">
+        <table class="impact-table">
+          <caption>Impacted skills/files — v2.1.0</caption>
+          <thead>
+            <tr><th scope="col">Skill</th><th scope="col">Impact</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>fintech-token-ecosystem</code></td><td>Content enriched (Stages 2–5, 7) + reference file expanded</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="entry" id="v2-0-0" aria-labelledby="v2-0-0-h">
+      <div class="entry-head">
+        <span class="version-stamp" id="v2-0-0-h"><span class="v">v</span>2.0.0</span>
+        <time class="entry-date" datetime="2026-08-16">2026-08-16</time>
+      </div>
+      <p class="entry-summary">Restructured the repository from a single SAP skill into a multi-skill business analyst set, and added three new domain skills: Fintech token ecosystems, Medtech elderly cognitive health, and AI-collaborative demo building.</p>
+
+      <div class="group">
+        <div class="group-label"><span class="tag tag--breaking">Breaking</span></div>
+        <ul class="group-list">
+          <li>Moved <code>SKILL.md</code> → <code>skills/sap-functional-specs/SKILL.md</code>. Any reference, bookmark, or automation pointing at the old root-level path will break.
+            <span class="impact"><strong>Impacted function:</strong> skill discovery/invocation for <code>sap-functional-specs</code> — the 7-stage workflow content is unchanged, only its file location moved.</span>
+          </li>
+          <li>Moved reference files into <code>skills/sap-functional-specs/references/</code>: <code>sap-transactions-reference.md</code>, <code>example-p2p-fs.md</code>, <code>quick-reference.md</code>.</li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="group-label"><span class="tag tag--added">Added</span></div>
+        <ul class="group-list">
+          <li>New skill <code>fintech-token-ecosystem</code> (<code>skills/fintech-token-ecosystem/SKILL.md</code>) — 7-stage workflow for token launches and ecosystem management.
+            <span class="impact"><strong>Covers:</strong> business context → tokenomics design (supply, allocation, vesting, incentive loops) → token standard &amp; platform selection → ecosystem component mapping (wallets, exchanges, staking, governance, treasury) → compliance &amp; risk (MiCA, SEC/Howey, KYC/AML) → smart-contract functional spec → TGE launch &amp; lifecycle roadmap.</span>
+          </li>
+          <li>New reference <code>skills/fintech-token-ecosystem/references/token-compliance-reference.md</code> — token standards cheat sheet, regulatory frameworks by jurisdiction, KYC/AML requirement starter set, audit &amp; security checklist.</li>
+          <li>New skill <code>medtech-cognitive-health</code> (<code>skills/medtech-cognitive-health/SKILL.md</code>) — 7-stage workflow for elderly functional-brain/health assessment platforms.
+            <span class="impact"><strong>Covers:</strong> clinical &amp; business context → care pathway mapping (test → score → triage → city-delivered treatment) → assessment model (test battery, scoring, risk stratification, accessibility) → regulatory &amp; data protection (SaMD/MDR/FDA, GDPR/HIPAA, hazard log) → HL7 FHIR interoperability design → formal FS → pilot/rollout roadmap.</span>
+          </li>
+          <li>New reference <code>skills/medtech-cognitive-health/references/healthcare-standards-reference.md</code> — MDR/FDA pathways, GDPR/HIPAA summary, FHIR resource cheat sheet, validated clinical instruments table, hazard log starter set.</li>
+          <li>New skill <code>ai-demo-collaboration</code> (<code>skills/ai-demo-collaboration/SKILL.md</code>) — 6-stage workflow for business analysts building demos in direct collaboration with AI.
+            <span class="impact"><strong>Covers:</strong> demo framing (one-question charter) → persona &amp; journey scoping → AI-buildable spec writing → build-review-refine loop → demo day &amp; structured feedback capture → demo-to-production requirements bridge.</span>
+          </li>
+          <li>New reference <code>skills/ai-demo-collaboration/references/demo-spec-template.md</code> — demo charter, AI-buildable spec template, prompt patterns, demo-ready checklist, feedback capture sheet, demo-to-production gap table.</li>
+          <li><code>CHANGELOG.md</code> and <code>CHANGELOG.html</code> — this record.</li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="group-label"><span class="tag tag--changed">Changed</span></div>
+        <ul class="group-list">
+          <li><code>README.md</code> rewritten as an index of all four skills.
+            <span class="impact"><strong>Impacted function:</strong> repo entry point — previously documented only the SAP skill package; now includes a skill overview table, the <code>skills/</code> directory tree, and how the AI demo skill's output feeds into the domain skills' FS workflows.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="impact-table-wrap">
+        <table class="impact-table">
+          <caption>Impacted skills/files — v2.0.0</caption>
+          <thead>
+            <tr><th scope="col">Skill</th><th scope="col">Impact</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>sap-functional-specs</code></td><td>Path moved only; workflow content unchanged</td></tr>
+            <tr><td><code>fintech-token-ecosystem</code></td><td>New</td></tr>
+            <tr><td><code>medtech-cognitive-health</code></td><td>New</td></tr>
+            <tr><td><code>ai-demo-collaboration</code></td><td>New</td></tr>
+            <tr><td><code>README.md</code></td><td>Rewritten</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="entry" id="v1-0-0" aria-labelledby="v1-0-0-h">
+      <div class="entry-head">
+        <span class="version-stamp" id="v1-0-0-h"><span class="v">v</span>1.0.0</span>
+        <time class="entry-date" datetime="2026-05-13">2026-05-13</time>
+      </div>
+      <p class="entry-summary">Initial release: a single SAP Functional Specifications skill for business/functional analysts.</p>
+
+      <div class="group">
+        <div class="group-label"><span class="tag tag--added">Added</span></div>
+        <ul class="group-list">
+          <li><code>SKILL.md</code> — <code>sap-functional-specs</code> skill with a 7-stage workflow (gather business context → explore SAP structures &amp; transaction codes → data model mapping → propose 2–3 implementation approaches → write the formal FS → user review &amp; iteration → implementation transition roadmap).</li>
+          <li><code>sap-transactions-reference.md</code> — SAP module, transaction code, and master-data table reference.</li>
+          <li><code>example-p2p-fs.md</code> — complete worked Procure-to-Pay FS example.</li>
+          <li><code>quick-reference.md</code> — user guide to the skill's workflow.</li>
+          <li><code>README.md</code> — initial package documentation.</li>
+        </ul>
+      </div>
+
+      <div class="impact-table-wrap">
+        <table class="impact-table">
+          <caption>Impacted skills/files — v1.0.0</caption>
+          <thead>
+            <tr><th scope="col">Skill</th><th scope="col">Impact</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>sap-functional-specs</code></td><td>New</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  Source of truth: <a href="CHANGELOG.md">CHANGELOG.md</a> · Repository: DatNguyen998/FS_Skills
+</footer>

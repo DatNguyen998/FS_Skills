@@ -2,6 +2,8 @@
 
 A collection of Claude skills for business analysts, covering functional specification writing and requirement analysis across the domains I work in: SAP, Fintech (token ecosystems), Medtech (elderly cognitive health), and AI-collaborative demo building.
 
+See [`CHANGELOG.md`](CHANGELOG.md) (or the rendered [`CHANGELOG.html`](CHANGELOG.html)) for a version-by-version record of what changed and which skills each release impacted.
+
 ## Skills Overview
 
 | Skill | Domain | Use it when… |
