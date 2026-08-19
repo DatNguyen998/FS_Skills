@@ -14,6 +14,36 @@ Nothing yet.
 
 ---
 
+## [2.1.0] — 2026-08-19
+
+### Summary
+Enriched `fintech-token-ecosystem` with current (2026) regulatory, market, and security-practice research: the SEC/CFTC joint interpretive framework, MiCA's machine-readable whitepaper mandate, the US GENIUS Act for stablecoins, FATF Travel Rule enforcement reality, ERC-3643 institutional adoption data, DAO governance/treasury best practices, and 2025–2026 exploit/audit market data.
+
+### Changed
+- **`skills/fintech-token-ecosystem/SKILL.md`**:
+  - **Stage 2 (Tokenomics Design)** — added §2.4 "Design Frameworks & Current Practice (2026)": stakeholder analysis / incentive-design / participatory co-design frameworks, the hybrid inflation-then-burn market pattern, and a common-failure-modes table (excessive inflation, utility gap, weak governance, opaque unlocks).
+  - **Stage 3 (Token Standard Selection)** — added ERC-4626 to the standards table; added an ERC-3643 institutional-adoption callout ($32B+ RWA tokenized, 180+ jurisdictions, DTCC/Apex/Invesco/Franklin Templeton/Fasanara adopters, ISO standardization in progress).
+  - **Stage 4 (Ecosystem Component Mapping)** — added §4.1 "Governance Model — Current Best Practice": tiered decision-making, vote delegation, vote-escrow, hybrid weighting, governance minimization; added §4.2 "Treasury — Current Best Practice": multisig threshold guidance, signer rotation, hardware-key requirement, monitoring, Safe as default tooling.
+  - **Stage 5 (Compliance & Risk Analysis)** — reworked §5.1 with the March 2026 SEC/CFTC 5-bucket taxonomy and the marketing-language-driven Howey analysis, the GENIUS Act stablecoin requirements, and MiCA's Dec 2025 XHTML/iXBRL whitepaper format mandate; §5.2 now states current FATF Travel Rule enforcement coverage (~73% legislated, ~40% enforced) with named enforcing jurisdictions; §5.3 risk register reordered and expanded around access-control failures, oracle manipulation, and bridge compromise as the current leading loss categories, with audit cost bands.
+  - **Stage 7** — noted the shift from one-time pre-launch audit to continuous post-launch monitoring.
+  - Added a closing "A Note on Currency" section pointing to the reference file's sourced research and flagging it for periodic re-verification.
+  - **Impacted function:** all 7 workflow stages retain their structure; content deepened, no stage renamed or removed.
+- **`skills/fintech-token-ecosystem/references/token-compliance-reference.md`**:
+  - Added ERC-3643 adoption note under the standards table.
+  - Expanded the Regulatory Frameworks section with the 2026 SEC/CFTC framework, GENIUS Act requirements, and MiCA whitepaper format change.
+  - Added "FATF Travel Rule — Enforcement Reality Check (2026)".
+  - Added new sections: "Governance Model Quick Reference" and "Treasury Multisig Checklist".
+  - Added "Exploit & Audit Market Data (2025–2026)" under the Audit & Security Checklist.
+  - Added glossary terms: ve-model, RWA, TWAP.
+  - Added a "Sources & Research Currency" section listing every source consulted, dated August 2026.
+
+### Impacted skills/files in this release
+| Skill | Impact |
+|---|---|
+| `fintech-token-ecosystem` | Content enriched (Stages 2–5, 7) + reference file expanded |
+
+---
+
 ## [2.0.0] — 2026-08-16
 
 ### Summary
@@ -67,6 +97,7 @@ Initial release: a single SAP Functional Specifications skill for business/funct
 |---|---|
 | `sap-functional-specs` | New |
 
-[Unreleased]: https://github.com/DatNguyen998/FS_Skills/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/DatNguyen998/FS_Skills/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/DatNguyen998/FS_Skills/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/DatNguyen998/FS_Skills/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/DatNguyen998/FS_Skills/releases/tag/v1.0.0
